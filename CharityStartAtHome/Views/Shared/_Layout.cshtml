@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Do your bit - @ViewBag.Title</title>
+
+        @Styles.Render("~/Content/css")
+
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/4.10.1/bootstrap-social.css" rel="stylesheet">
+        <link rel="stylesheet" media="screen and (min-width: 900px)" href="widescreen.css">
+        <link rel="stylesheet" media="screen and (max-width: 600px)" href="smallscreen.css">
+
+        @Scripts.Render("~/bundles/jquery")
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAByi7wbsNEkpNZtepHeoiKdThuSoJpO40"></script>
+
+
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+          <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+        <nav class="navbar navbar-default" role="navigation" id="navbar">
+            <div class="container">
+                <div class="navbar-header">
+                    <button style="color:white" type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <span>Do Your Bit</span>
+                </div>
+                <div class="navbar-collapse collapse ">
+                    <ul class="nav navbar-nav navbar-collapse pull-right">
+                        <li id="Homepage" class="@(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : "")">@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li id="About" class="@(ViewContext.RouteData.Values["Action"].ToString() == "About" ? "active" : "")">@Html.ActionLink("About us", "About", "Home")</li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                What you can do
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li class="dropdown-submenu">
+                                    <a href="#">Donate Clothes</a>
+                                    <ul class="dropdown-menu">
+                                        <li id="cloth" class="@(ViewContext.RouteData.Values["Action"].ToString() == "Clothm" ? "active" : "")">@Html.ActionLink("Learn more", "Clothm", "Clothes")</li>
+                                        <li id="list1" class="@(ViewContext.RouteData.Values["Action"].ToString() == "List" ? "active" : "")">@Html.ActionLink("Donate now!", "List", "Clothes")</li>
+
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a href="#">Donate Time</a>
+                                    <ul class="dropdown-menu">
+                                        <li id="time" class="@(ViewContext.RouteData.Values["Action"].ToString() == "Time" ? "active" : "")">@Html.ActionLink("Learn more", "Time", "Viccharities")</li>
+                                        <li id="list2" class="@(ViewContext.RouteData.Values["Action"].ToString() == "List" ? "active" : "")">@Html.ActionLink("Donate now!", "List", "Viccharities")</li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a href="#">Give Blood</a>
+                                    <ul class="dropdown-menu">
+                                        <li id="time" class="@(ViewContext.RouteData.Values["Action"].ToString() == "Bloodm" ? "active" : "")">@Html.ActionLink("Learn more", "Bloodm", "Bloods")</li>
+                                        <li id="list2" class="@(ViewContext.RouteData.Values["Action"].ToString() == "List" ? "active" : "")">@Html.ActionLink("Give now!", "List", "Bloods")</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        @RenderBody()
+
+        <footer>
+            <div>
+                <div class="text-center">
+                    <p style="color:azure">Copyright &copy; Do Your bit 2018</p>
+                    <a class="btn btn-social-icon btn-lg btn-facebook"><i class="fa fa-facebook"></i></a>
+                    <a class="btn btn-social-icon btn-lg btn-twitter"><i class="fa fa-twitter"></i></a>
+                    <a class="btn btn-social-icon btn-lg btn-youtube"><i class="fa fa-youtube"></i></a>
+                    <a class="btn btn-social-icon btn-lg btn-google-plus"><i class="fa fa-google-plus"></i></a>
+                </div>
+            </div>
+        </footer>
+
+        @Scripts.Render("~/bundles/modernizr")
+        @Scripts.Render("~/bundles/bootstrap")
+        @Scripts.Render("~/bundles/scripts")
+
+    </body>
+</html>

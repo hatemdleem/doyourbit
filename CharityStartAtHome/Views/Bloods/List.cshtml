@@ -1,0 +1,251 @@
+﻿@model PagedList.IPagedList<CharityStartAtHome.Models.Blood>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using PagedList.Mvc;
+
+<ul class="breadcrumb">
+    Your are here:
+    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+    <li>@Html.ActionLink("What you can help", "Index", "Home")</li>
+    <li>@Html.ActionLink("Donate blood", "Bloodm", "Bloods")</li>
+    <li style="color:black">Find nearby places</li>
+</ul>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-xs-12">
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sx-12 text-center">
+            <h1>Find blood donation centres near you</h1>
+        </div>
+    </div>
+
+    <div class="row m-b-20">
+        <div class="col-sm-12 text-center">
+            @using (Html.BeginForm("List", "Bloods", FormMethod.Get))
+            {
+                <input class="search"
+                       type="text"
+                       name="SearchString"
+                       placeholder="Search by Postcode e.g. 3000 or Address"
+                       value="@Request["SearchString"]"
+                       autofocus />
+                <button class="btn btn-success btn-lg">
+                    Search
+                    <i class="glyphicon glyphicon-search"></i>
+                </button>
+            }
+        </div>
+    </div>
+
+    @if (Model.Count == 0)
+    {
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="text-capitalize">
+                    <p><text>No blood donation center is found.</text></p>
+                    <p><text>Please make sure you input a valid postcode/address.</text></p>
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (Model.Count > 0)
+    {
+        <div class="row m-b-20" id="list-items">
+            <div class="col-sm-6">
+                <ul>
+                    @foreach (var item in Model)
+                    {
+                        <li>
+                            <div class="list-group-item flex-column">
+                                <h2>@Html.DisplayFor(modelItem => item.Center)</h2>
+                                <h3>Address</h3>
+                                <p>@Html.DisplayFor(modelItem => item.Address)</p>
+                                <h3>Open hour:</h3>
+                                <p>@Html.DisplayFor(modelItem => item.Openhour)</p>
+                                <h3>Contact number:</h3>
+                                <p>@Html.DisplayFor(modelItem => item.Phone)</p>
+                                <div>@Html.ActionLink("Available transport facilities & Café Nearby", "Details", new { id = item.Id }, new { @class = "btn btn-success btn-lg" })</div>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+            <div class="col-xs-6">
+                <div id="map"></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 text-center">
+                Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+                @Html.PagedListPager(Model, page => Url.Action("List",
+                                              new
+                                              {
+                                                  page,
+                                                  sortOrder = ViewBag.CurrentSort,
+                                                  currentFilter = ViewBag.CurrentFilter,
+                                                  option = Request.QueryString["option"],
+                                                  search = Request.QueryString["search"]
+                                              }))
+
+                <a id="back-to-top" href="#" class="btn btn-primary btn-lg back-to-top" role="button" title="Click to return on the top page" data-toggle="tooltip" data-placement="left">
+                    <span class="glyphicon glyphicon-chevron-up"></span>
+                </a>
+            </div>
+        </div>
+    }
+</div>
+
+<script type="text/javascript">
+    // GLOBALS
+    var map = null;
+
+    // MODELS
+    function Location(title, latitude, longitude, number) {
+        var self = this;
+        self.Title = title;
+        self.Latitude = latitude;
+        self.Longitude = longitude;
+        self.Number = number;
+    }
+
+    // EVENTS
+    $(document).ready(function () {
+        var locations = [
+            new Location('Bondi Beach', - 33.890542, 151.274856, 4),
+            new Location('Coogee Beach', -33.923036, 151.259052, 5),
+            new Location('Cronulla Beach', -34.028249, 151.157507, 3),
+            new Location('Manly Beach', -33.80010128657071, 151.28747820854187, 2),
+            new Location('Maroubra Beach', -33.950198, 151.259302, 1)
+        ];
+
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: { lat: -34.397, lng: 150.644 },
+            zoom: 8
+        });
+
+        for (var i = 0; i < locations.length; i++) {
+
+            var marker = new google.maps.Marker({
+                position: new google.maps.LatLng(locations[i].Latitude, locations[i].Longitude),
+                title: locations[i].Title
+            });
+
+            marker.setMap(map);
+        }
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(addUserMarker, showError, { maximumAge: 0 });
+        } else {
+            alert("Geolocation is not supported by this browser.");
+        }
+
+        $("#map").height($("#list-items").height());
+    });
+
+    $(window).scroll(function () {
+        if ($(this).scrollTop() > 50) {
+            $('#back-to-top').fadeIn();
+        } else {
+            $('#back-to-top').fadeOut();
+        }
+    });
+
+    $('#back-to-top').click(function () {
+        $('#back-to-top').tooltip('hide');
+        $('body,html').animate({
+            scrollTop: 0
+        }, 800);
+        return false;
+    });
+
+    // FUCNTIONS
+    function addUserMarker() {
+        var marker = new google.maps.Marker({
+            position: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+            title: "Your location",
+            icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
+        });
+
+        marker.setMap(map);
+
+        setWeather(position.coords.latitude, position.coords.longitude);
+    }
+
+    function showError(error) {
+        switch (error.code) {
+            case error.PERMISSION_DENIED:
+                console.log("User denied the request for Geolocation.");
+                break;
+            case error.POSITION_UNAVAILABLE:
+                console.log("Location information is unavailable.");
+                break;
+            case error.TIMEOUT:
+                console.log("The request to get user location timed out.");
+                break;
+            case error.UNKNOWN_ERROR:
+                console.log("An unknown error occurred.");
+                break;
+        }
+    }
+
+    function checkNumber() {
+        var x, text;
+
+        // Get the value of the input field with id="numb"
+        x = document.getElementById("myInput2").value;
+
+        // If x is Not a Number or less than one or greater than 10
+        if (isNaN(x)) {
+            text = "Error:Input must not be null";
+        } else if (x.length > 4 || x.length < 4) {
+            text = "Error:Input must be 4 digits";
+        } else if (x == 1234) {
+            text = "Error:Input invailded with no post code is 1234 ";
+        } else if (!(x.startsWith("3"))) {
+            text = "Error:Input must be start with number 3 ";
+        } else {
+            text = null;
+            var x = document.getElementById("mySelect").value;
+            if (x == '1') {
+                myFunction();
+            }
+            if (x == '2') {
+                myFunction2();
+
+            }
+        }
+        document.getElementById("demo").innerHTML = text;
+    }
+
+    function setWeather(latitude, longitude) {
+
+        //-33.950198, 151.259302
+        latitude = -33.950198;
+        longitude = 151.259302;
+
+        var apiKey = 'b5720867ff3d98c666593de2ef32f09b';
+        var url = 'https://api.forecast.io/forecast/';
+
+        $.getJSON(url + apiKey + "/" + latitude + "," + longitude + "?callback=?", function (data) {
+            var str = data.currently.temperature;
+            var celsius = ((str - 32) / 1.8).toFixed(2);
+
+            $('#temp').html('Current temperature is ' + celsius + '° C ' + 'and the weather is ' + data.currently.summary);
+            $('#temp2').html('This week forecast: ' + data.daily.summary);
+
+            $('#icon').html(data.currently.icon);
+            $('#minutely').html(data.minutely.summary);
+        });
+    }
+</script>
+

@@ -1,0 +1,368 @@
+﻿/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 100%;
+}
+
+.silver {
+    background-color: silver;
+}
+
+tr.dataHover {
+    background-color: #FFFACD;
+}
+
+tfoot input {
+    width: 100%;
+    padding: 3px;
+    box-sizing: border-box;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.clear-padding {
+    padding: 0;
+}
+
+.clear-padding-row {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.clear-padding-col {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+
+
+
+/* =================== */
+i {
+    color: white;
+    width: 5%;
+}
+
+.dropdown-submenu {
+    position: relative;
+}
+
+    .dropdown-submenu > .dropdown-menu {
+        top: 0;
+        left: 100%;
+        margin-top: -6px;
+        margin-left: -1px;
+        -webkit-border-radius: 0 6px 6px 6px;
+        -moz-border-radius: 0 6px 6px;
+        border-radius: 0 6px 6px 6px;
+    }
+
+    .dropdown-submenu:hover > .dropdown-menu {
+        display: block;
+    }
+
+    .dropdown-submenu > a:after {
+        display: block;
+        content: " ";
+        float: right;
+        width: 0;
+        height: 0;
+        border-color: transparent;
+        border-style: solid;
+        border-width: 5px 0 5px 5px;
+        border-left-color: #2aaf8e;
+        margin-top: 5px;
+        margin-right: -10px;
+    }
+
+    .dropdown-submenu:hover > a:after {
+        border-left-color: #2aaf8e;
+    }
+
+    .dropdown-submenu.pull-left {
+        float: none;
+    }
+
+        .dropdown-submenu.pull-left > .dropdown-menu {
+            left: -100%;
+            margin-left: 10px;
+            -webkit-border-radius: 6px 0 6px 6px;
+            -moz-border-radius: 6px 0 6px 6px;
+            border-radius: 6px 0 6px 6px;
+        }
+
+
+/* ===== GENERAL ==== */
+h1 {
+    font-family: "Arial Black", Gadget, sans-serif;
+    color: #2aaf8e;
+    font-size: 50px;
+}
+
+h2 {
+    font-family: "Arial Black", Gadget, sans-serif;
+    color: #2aaf8e;
+    font-size: 30px;
+}
+
+h3 {
+    font-family: "Arial Black", Gadget, sans-serif;
+    color: #2aaf8e;
+    margin-left: 20px;
+}
+
+h4 {
+    font-family: "Arial Black", Gadget, sans-serif;
+    color: #2aaf8e;
+    font-size: 15px;
+}
+
+p {
+    font-family: 'Arial Unicode MS';
+    font-size: 20px;
+}
+
+.btn {
+    background: #1ABB9C;
+}
+
+.m-b-20 {
+    margin-bottom: 20px;
+}
+
+/* ===== FOOTER ==== */
+footer {
+    background-color: #2aaf8e;
+    margin-top: 100px;
+    width: 100%;
+}
+
+/* ===== NAVBAR ==== */
+#navbar {
+    margin-bottom: 0px;
+    border-radius: 0;
+    background-color: #e7e7e7;
+}
+
+    #navbar .navbar-header {
+        font-family: 'Comic Sans MS';
+        font-size: 35px;
+        color: #2aaf8e;
+    }
+
+    #navbar .navbar-nav li {
+        font-family: 'Arial Unicode MS';
+        font-size: 20px;
+    }
+
+    #navbar .navbar-nav .dropdown-submenu li {
+        font-family: 'Arial Unicode MS';
+        font-size: 20px;
+    }
+
+/* ===== BREADCRUMB ===== */
+.breadcrumb {
+    padding: 8px 16px;
+    list-style: none;
+    background-color: #eee;
+}
+
+/* ===== PAGINATION ===== */
+.pagination {
+    margin: 0;
+}
+
+.pagination li {
+    list-style-type: none;
+    float: left;
+    min-width: 15px;
+}
+
+/* ==== LIST ==== */
+.search {
+    width: 70%;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: white;
+    background-image: url('searchicon.png');
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+    padding: 12px 20px 12px 40px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+}
+
+#list-items ul {
+    overflow-y: scroll; 
+    height: 600px;
+}
+
+    #list-items ul li h3 {
+        font-family: 'Arial Unicode MS';
+    }
+
+
+/* ===== DETAILS ===== */
+#floating-panel {
+    background-color: transparent;
+    padding: 5px;
+    font-size: 15px;
+    font-family: Arial;
+    border: 1px solid #ccc;
+    display: none;
+}
+
+
+/* ======= Blood_Details ==== */
+
+#details_map {
+    width: 100%;
+    height: 600px;
+    margin-right: 400px;
+}
+
+#Blood_Details hr.style-two {
+    border: 0;
+    height: 3px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), #2aaf8e, rgba(0, 0, 0, 0));
+}
+
+    #Blood_Details dt {
+        font-family: "Arial Black", Gadget, sans-serif;
+        color: #2aaf8e;
+        font-size: 15px;
+        margin-left: 20px;
+    }
+
+    #Blood_Details dd {
+        font-family: 'Arial Unicode MS';
+        font-size: 15px;
+    }
+
+
+    #Blood_Details #Dropdown {
+        color: black;
+        top: 10px;
+        left: 25%;
+        z-index: 5;
+        background-color: orange;
+        padding: 5px;
+        border: 1px solid blue;
+        text-align: center;
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+        padding-left: 10px;
+    }
+
+    #Blood_Details #floating-panel {
+        position: absolute;
+        top: 10px;
+        left: 25%;
+        z-index: 5;
+        background-color: transparent;
+        padding: 5px;
+        border: 1px solid #999;
+        text-align: center;
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+        padding-left: 10px;
+    }
+
+    #Blood_Details #right-panel {
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+        padding-left: 10px;
+
+        height: 100%;
+        float: right;
+        width: 390px;
+        overflow: auto;
+    }
+
+        #Blood_Details #right-panel select, #right-panel input {
+            font-size: 15px;
+        }
+
+        #Blood_Details #right-panel select {
+            width: 100%;
+        }
+
+        #Blood_Details #right-panel i {
+            font-size: 12px;
+        }
+ 
+
+    #Blood_Details hr.style-two {
+        border: 0;
+        height: 3px;
+        background-image: linear-gradient(to right, rgba(0, 0, 0, 0), #2aaf8e, rgba(0, 0, 0, 0));
+    }
+
+    /* === CLOTHES_LIST ==== */
+    #Clothes_List .back-to-top {
+        cursor: pointer;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        display: none;
+    }
+
+    #Clothes_List #map {
+        height: 400px;
+        width: 100%;
+        margin-left: 100px;
+    }
+
+    #Clothes_List select {
+        color: #2aaf8e;
+    }
+
+    #Clothes_List b {
+        font-family: 'Arial Unicode MS';
+        color: #2aaf8e;
+        font-size: 20px;
+    }
+
+    #Clothes_List input[type=text] {
+        width: 70%;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+        background-color: white;
+        background-image: url('searchicon.png');
+        background-position: 10px 10px;
+        background-repeat: no-repeat;
+        padding: 12px 20px 12px 40px;
+        -webkit-transition: width 0.4s ease-in-out;
+        transition: width 0.4s ease-in-out;
+    }
+
+    #Clothes_List input[type=text]:focus {
+        width: 70%;
+    }
+
+    #Clothes_List .text {
+        font-family: 'Arial Unicode MS';
+        color: #2aaf8e;
+        font-size: 20px;
+    }
