@@ -231,9 +231,18 @@ footer {
     display: none;
 }
 
+/* ==== WEATHER ==== */
+#weather-icon {
+    color: #2aaf8e;
+    font-size: 50px;
+    padding-right: 20px;
+}
+#weather-degrees {
+    color: #2aaf8e;
+    font-size: 40px;
+}
 
 /* ======= Blood_Details ==== */
-
 #details_map {
     width: 100%;
     height: 600px;

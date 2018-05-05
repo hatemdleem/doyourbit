@@ -13,6 +13,14 @@
 </ul>
 
 <div class="container">
+
+    <div class="row">
+        <div class="col-sx-12 text-center">
+            <i id="weather-icon"></i>
+            <span id="weather-degrees"></span>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-sx-12 text-center">
             <h1>Find clothes stores near you</h1>
@@ -86,14 +94,14 @@
                 Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
                 @Html.PagedListPager(Model, page => Url.Action("List",
-                                         new
-                                         {
-                                             page,
-                                             sortOrder = ViewBag.CurrentSort,
-                                             currentFilter = ViewBag.CurrentFilter,
-                                             option = Request.QueryString["option"],
-                                             search = Request.QueryString["search"]
-                                         }))
+                                              new
+                                              {
+                                                  page,
+                                                  sortOrder = ViewBag.CurrentSort,
+                                                  currentFilter = ViewBag.CurrentFilter,
+                                                  option = Request.QueryString["option"],
+                                                  search = Request.QueryString["search"]
+                                              }))
 
                 <a id="back-to-top" href="#" class="btn btn-primary btn-lg back-to-top" role="button" title="Click to return on the top page" data-toggle="tooltip" data-placement="left">
                     <span class="glyphicon glyphicon-chevron-up"></span>
@@ -107,15 +115,6 @@
 <script type="text/javascript">
     // GLOBALS
     var map = null;
-
-    // MODELS
-    function Location(title, latitude, longitude, number) {
-        var self = this;
-        self.Title = title;
-        self.Latitude = latitude;
-        self.Longitude = longitude;
-        self.Number = number;
-    }
 
     // EVENTS
     $(document).ready(function () {
@@ -166,93 +165,4 @@
         }, 800);
         return false;
     });
-
-    // FUCNTIONS
-    function addUserMarker() {
-        var marker = new google.maps.Marker({
-            position: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
-            title: "Your location",
-            icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
-        });
-
-        marker.setMap(map);
-    }
-
-    function showError(error) {
-        switch (error.code) {
-            case error.PERMISSION_DENIED:
-                console.log("User denied the request for Geolocation.");
-                break;
-            case error.POSITION_UNAVAILABLE:
-                console.log("Location information is unavailable.");
-                break;
-            case error.TIMEOUT:
-                console.log("The request to get user location timed out.");
-                break;
-            case error.UNKNOWN_ERROR:
-                console.log("An unknown error occurred.");
-                break;
-        }
-    }
-
-    function checkNumber() {
-        var x, text;
-
-        // Get the value of the input field with id="numb"
-        x = document.getElementById("myInput2").value;
-
-        // If x is Not a Number or less than one or greater than 10
-        if (isNaN(x)) {
-            text = "Error:Input must not be null";
-        } else if (x.length > 4 || x.length < 4) {
-            text = "Error:Input must be 4 digits";
-        } else if (x == 1234) {
-            text = "Error:Input invailded with no post code is 1234 ";
-        } else if (!(x.startsWith("3"))) {
-            text = "Error:Input must be start with number 3 ";
-        } else {
-            text = null;
-            var x = document.getElementById("mySelect").value;
-            if (x == '1') {
-                myFunction();
-            }
-            if (x == '2') {
-                myFunction2();
-
-            }
-        }
-        document.getElementById("demo").innerHTML = text;
-    }
-
-    //function weather() {
-    //    var location = document.getElementById("location");
-    //    var apiKey = 'b5720867ff3d98c666593de2ef32f09b'; // PLEASE SIGN UP FOR YOUR OWN API KEY
-    //    var url = 'https://api.forecast.io/forecast/';
-
-    //    navigator.geolocation.getCurrentPosition(success, error);
-
-    //    function success(position) {
-    //        latitude = position.coords.latitude;
-    //        longitude = position.coords.longitude;
-
-    //        //location.innerHTML = 'Latitude is ' + latitude + '° <br> Longitude is ' + longitude + '°';
-
-    //        $.getJSON(url + apiKey + "/" + latitude + "," + longitude + "?callback=?", function (data) {
-    //            var str = data.currently.temperature;
-    //            var celsius = ((str - 32) / 1.8).toFixed(2);
-
-    //            $('#temp').html('Current temperature is ' + celsius + '° C ' + 'and the weather is ' + data.currently.summary);
-    //            $('#temp2').html('This week forecast: ' + data.daily.summary);
-
-    //            $('#icon').html(data.currently.icon);
-    //            $('#minutely').html(data.minutely.summary);
-    //        });
-    //    }
-
-    //    function error() {
-    //        location.innerHTML = "Unable to retrieve your location";
-    //    }
-
-    //    location.innerHTML = "Locating...";
-    //}
 </script>

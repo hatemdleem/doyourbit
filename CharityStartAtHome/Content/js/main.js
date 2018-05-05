@@ -14,126 +14,104 @@
             }
         });
     }
-
-    $('input.column_filter').on('keyup click', function () {
-        filterColumn2($(this).parents('tr').attr('data-column'));
-        filterColumn3($(this).parents('tr').attr('data-column'));
-    });
-
-    $('#clothes tbody tr:even').addClass("silver");
-    $('#clothes tbody tr').mouseover(function () {
-        $(this).addClass('dataHover');
-    });
-    $('#clothes tbody tr').mouseout(function () {
-        $(this).removeClass('dataHover');
-    });
-
-    $('#data tbody tr:even').addClass("silver");
-    $('#data tbody tr').mouseover(function () {
-        $(this).addClass('dataHover');
-    });
-    $('#data tbody tr').mouseout(function () {
-        $(this).removeClass('dataHover');
-    });
-
-    $('#AspNetUser tbody tr:even').addClass("silver");
-    $('#AspNetUser tbody tr').mouseover(function () {
-        $(this).addClass('dataHover');
-    });
-    $('#AspNetUser tbody tr').mouseout(function () {
-        $(this).removeClass('dataHover');
-    });
 });
 
-function filterColumn(i) {
-    $('#article').DataTable().column(i).search(
-        $('#col' + i + '_filter').val(),
-        //,
-        //$('#col'+i+'_regex').prop('checked'),
-        $('#col' + i + '_smart')
-    ).draw();
+// MODELS
+function Location(title, latitude, longitude, number) {
+    var self = this;
+    self.Title = title;
+    self.Latitude = latitude;
+    self.Longitude = longitude;
+    self.Number = number;
 }
 
-function filterColumn2(i) {
-    $('#data').DataTable().column(i).search(
-        $('#col' + i + '_filter').val(),
-        //,
-        //$('#col'+i+'_regex').prop('checked'),
-        $('#col' + i + '_smart')
-    ).draw();
+// FUCNTIONS
+function addUserMarker(position) {
+
+    var marker = new google.maps.Marker({
+        position: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+        title: "Your location",
+        icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
+    });
+    marker.setMap(map);
+
+    setWeather(position.coords.latitude, position.coords.longitude);
 }
 
-function filterColumn3(i) {
-    $('#AspNetUser').DataTable().column(i).search(
-        $('#col' + i + '_filter').val(),
-        //,
-        //$('#col'+i+'_regex').prop('checked'),
-        $('#col' + i + '_smart')
-    ).draw();
+function showError(error) {
+    switch (error.code) {
+        case error.PERMISSION_DENIED:
+            console.log("User denied the request for Geolocation.");
+            break;
+        case error.POSITION_UNAVAILABLE:
+            console.log("Location information is unavailable.");
+            break;
+        case error.TIMEOUT:
+            console.log("The request to get user location timed out.");
+            break;
+        case error.UNKNOWN_ERROR:
+            console.log("An unknown error occurred.");
+            break;
+    }
 }
 
-/* When the user clicks on the button, toggle between hiding and showing the dropdown content */
-function myFunction() {
-    document.getElementById("myDropdown").classList.toggle("show");
-}
+function checkNumber() {
+    var x, text;
 
-// Close the dropdown if the user clicks outside of it
-window.onclick = function (e) {
-    if (!e.target.matches('.dropbtn')) {
-        var myDropdown = document.getElementById("myDropdown");
-        if (myDropdown.classList.contains('show')) {
-            myDropdown.classList.remove('show');
+    // Get the value of the input field with id="numb"
+    x = document.getElementById("myInput2").value;
+
+    // If x is Not a Number or less than one or greater than 10
+    if (isNaN(x)) {
+        text = "Error:Input must not be null";
+    } else if (x.length > 4 || x.length < 4) {
+        text = "Error:Input must be 4 digits";
+    } else if (x == 1234) {
+        text = "Error:Input invailded with no post code is 1234 ";
+    } else if (!(x.startsWith("3"))) {
+        text = "Error:Input must be start with number 3 ";
+    } else {
+        text = null;
+        var x = document.getElementById("mySelect").value;
+        if (x == '1') {
+            myFunction();
+        }
+        if (x == '2') {
+            myFunction2();
+
         }
     }
+    document.getElementById("demo").innerHTML = text;
 }
 
+function setWeather(latitude, longitude) {
 
+    var apiKey = 'b5720867ff3d98c666593de2ef32f09b';
+    var url = 'https://api.forecast.io/forecast/';
 
+    $.getJSON(url + apiKey + "/" + latitude + "," + longitude + "?callback=?", function (data) {
 
-/* ===== Blood_Details ===== */
+        var celsius = ((data.currently.temperature - 32) / 1.8).toFixed(2);
 
-// Variables
-var map;
-var final_latitude = 0;
-var final_longitude = 0;
+        $('#weather-degrees').text(celsius + "°C");
+        $('#weather-icon').removeClass();
 
-// display the cafe restaurant point
-function processResults(results, status, pagination) {
-    if (status !== google.maps.places.PlacesServiceStatus.OK) {
-        return;
-    } else {
-        createMarkers(results);
-    }
-}
+        switch (data.currently.icon) {
+            case "sun":
+                $('#weather-icon').addClass("ion-ios-sunny-outline");
+                break;
+            case "rain":
+                $('#weather-icon').addClass("ion-ios-rainy-outline");
+                break;
+            case "partly-cloudy-day":
+                $('#weather-icon').addClass("ion-ios-partlysunny-outline");
+                break;
+        }
 
-//create the point for cafe near by
-function createMarkers(places) {
-    var bounds = new google.maps.LatLngBounds();
+        $('#temp').html('Current temperature is ' + celsius + '° C ' + 'and the weather is ' + data.currently.summary);
+        $('#temp2').html('This week forecast: ' + data.daily.summary);
 
-
-    for (var i = 0, place; place = places[i]; i++) {
-        var image = {
-            url: place.icon,
-            size: new google.maps.Size(71, 71),
-            origin: new google.maps.Point(0, 0),
-            anchor: new google.maps.Point(17, 34),
-            scaledSize: new google.maps.Size(25, 25)
-        };
-
-        var marker = new google.maps.Marker({
-            map: map,
-            icon: image,
-            title: place.name,
-            position: place.geometry.location,
-            animation: google.maps.Animation.DROP
-        });
-
-        //google.maps.event.addListener(image, 'click', function () {
-        //    infowindow.setContent(places.name);
-        //    infowindow.open(map, this);
-        //});
-
-        bounds.extend(place.geometry.location);
-    }
-    map.fitBounds(bounds);
+        $('#icon').html(data.currently.icon);
+        $('#minutely').html(data.minutely.summary);
+    });
 }
