@@ -103,8 +103,8 @@
                                                   search = Request.QueryString["search"]
                                               }))
 
-                <a id="back-to-top" href="#" class="btn btn-primary btn-lg back-to-top" role="button" title="Click to return on the top page" data-toggle="tooltip" data-placement="left">
-                    <span class="glyphicon glyphicon-chevron-up"></span>
+                <a id="back-to-top" href="#" class="btn btn-primary btn-lg" role="button" title="Click to return on the top page" data-toggle="tooltip" data-placement="left">
+                    <i class="fab arrow-up"></i>
                 </a>
             </div>
         </div>
@@ -142,7 +142,7 @@
         }
 
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(addUserMarker, showError, { maximumAge: 0 });
+            navigator.geolocation.getCurrentPosition(addUserMarkerWithWeather, showError, { maximumAge: 0 });
         } else {
             alert("Geolocation is not supported by this browser.");
         }

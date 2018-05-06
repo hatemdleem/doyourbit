@@ -110,6 +110,9 @@ i {
 
 
 /* ===== GENERAL ==== */
+body {
+    padding: 0;
+}
 h1 {
     font-family: "Arial Black", Gadget, sans-serif;
     color: #2aaf8e;
@@ -147,12 +150,29 @@ p {
     margin-bottom: 20px;
 }
 
+#back-to-top {
+    background-color: #1ABB9C !important;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    color: #fff;
+    border: 0px;
+}
+
 /* ===== FOOTER ==== */
 footer {
     background-color: #2aaf8e;
+    color: #fff;
     margin-top: 100px;
     width: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
+
+    footer .btn {
+        padding: 10px 13px 10px 0px;
+        width: 60px;
+    }
 
 /* ===== NAVBAR ==== */
 #navbar {
@@ -203,7 +223,6 @@ footer {
     border-radius: 4px;
     font-size: 16px;
     background-color: white;
-    background-image: url('searchicon.png');
     background-position: 10px 10px;
     background-repeat: no-repeat;
     padding: 12px 20px 12px 40px;
@@ -212,8 +231,10 @@ footer {
 }
 
 #list-items ul {
-    overflow-y: scroll; 
+    overflow-y: scroll;
     height: 600px;
+    list-style-type: none;
+
 }
 
     #list-items ul li h3 {
@@ -358,7 +379,6 @@ footer {
         border-radius: 4px;
         font-size: 16px;
         background-color: white;
-        background-image: url('searchicon.png');
         background-position: 10px 10px;
         background-repeat: no-repeat;
         padding: 12px 20px 12px 40px;

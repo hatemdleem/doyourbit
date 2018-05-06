@@ -16,6 +16,13 @@
     }
 });
 
+// GLOBALS
+var map = null;
+var address = null;
+var geocoder = new google.maps.Geocoder();
+var directionsDisplay = new google.maps.DirectionsRenderer;
+var directionsService = new google.maps.DirectionsService;
+
 // MODELS
 function Location(title, latitude, longitude, number) {
     var self = this;
@@ -25,17 +32,50 @@ function Location(title, latitude, longitude, number) {
     self.Number = number;
 }
 
-// FUCNTIONS
-function addUserMarker(position) {
+// EVENTS
+$('#mode').on('change', function () {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(calculateRoute, showError, { maximumAge: 0 });
+    } else {
+        alert("Geolocation is not supported by this browser.");
+    }
+});
 
+
+// FUCNTIONS
+function calculateRoute(position) {
+
+    var selectedMode = $('#mode').val();
+    var start = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+    directionsService.route({
+        origin: start,
+        destination: address,
+        travelMode: selectedMode
+    }, function (response, status) {
+        if (status === 'OK') {
+            directionsDisplay.setDirections(response);
+        } else {
+            window.alert('Directions request failed due to ' + status);
+        }
+    });
+}
+
+function addUserMarkerWithWeather(position) {
+
+    addUserMarker(position);
+
+    setWeather(position.coords.latitude, position.coords.longitude);
+}
+
+function addUserMarker(position) {
     var marker = new google.maps.Marker({
         position: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
         title: "Your location",
         icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
     });
-    marker.setMap(map);
 
-    setWeather(position.coords.latitude, position.coords.longitude);
+    marker.setMap(map);
 }
 
 function showError(error) {
@@ -114,4 +154,95 @@ function setWeather(latitude, longitude) {
         $('#icon').html(data.currently.icon);
         $('#minutely').html(data.minutely.summary);
     });
+}
+
+function processResults(results, status, pagination) {
+    if (status !== google.maps.places.PlacesServiceStatus.OK) {
+        return;
+    } else {
+        createMarkers(results);
+    }
+}
+
+function createMarkers(places) {
+    var bounds = new google.maps.LatLngBounds();
+
+    for (var i = 0, place; place = places[i]; i++) {
+        var image = {
+            url: place.icon,
+            size: new google.maps.Size(50, 50),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(17, 34),
+            scaledSize: new google.maps.Size(25, 25)
+        };
+
+        var marker = new google.maps.Marker({
+            map: map,
+            icon: image,
+            title: place.name,
+            position: place.geometry.location,
+            animation: google.maps.Animation.DROP
+        });
+
+        bounds.extend(place.geometry.location);
+    }
+    map.fitBounds(bounds);
+}
+
+function initDetails() {
+
+    address = "555 swanston street";
+
+    geocoder.geocode({ 'address': address }, function (results, status) {
+        if (status === 'OK') {
+
+            map = new google.maps.Map(document.getElementById('details_map'), {
+                center: results[0].geometry.location,
+                zoom: 17
+            });
+
+            var marker = new google.maps.Marker({
+                position: new google.maps.LatLng(results[0].geometry.location.Latitude, results[0].geometry.location.Longitude),
+                title: address
+            });
+
+            marker.setMap(map);
+
+            var bounds = new google.maps.LatLngBounds();
+            directionsDisplay.setMap(map);
+            directionsDisplay.setPanel(document.getElementById('right-panel'));
+
+            var control = document.getElementById('floating-panel');
+            control.style.display = 'block';
+            map.controls[google.maps.ControlPosition.TOP_CENTER].push(control);
+
+            var service = new google.maps.places.PlacesService(map);
+            service.nearbySearch({
+                location: results[0].geometry.location,
+                radius: 500,
+                type: 'cafe'
+            }, processResults);
+
+            var service = new google.maps.places.PlacesService(map);
+            service.nearbySearch({
+                location: results[0].geometry.location,
+                radius: 500,
+                type: 'parking'
+            }, processResults);
+
+        } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+        }
+    });
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(calculateRoute, showError, { maximumAge: 0 });
+    } else {
+        alert("Geolocation is not supported by this browser.");
+    }
+}
+
+function showPopup(url) {
+    newwindow = window.open(url, 'name', 'height=250,width=500,top=250,left=400,resizable');
+    if (window.focus) { newwindow.focus() }
 }
