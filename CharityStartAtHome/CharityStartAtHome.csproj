@@ -367,6 +367,8 @@
     <Content Include="Views\Viccharities\List.cshtml" />
     <Content Include="Views\Viccharities\Time.cshtml" />
     <Content Include="Views\Error\PageNotfound.cshtml" />
+    <Content Include="Views\Shared\_MapAndDetails.cshtml" />
+    <Content Include="Views\Shared\_ShareButtons.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

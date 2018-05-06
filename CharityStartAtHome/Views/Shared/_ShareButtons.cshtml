@@ -1,0 +1,36 @@
+﻿@{
+    string baseUrl = Request.Url.Scheme 
+                    + "://" 
+                    + Request.Url.Authority 
+                    + Request.ApplicationPath.TrimEnd('/') 
+                    + "/";
+}
+<div class="row">
+    <div class="col-xs-12 text-center">
+        <hr class="style-two" style="width:80%; margin-top:70px">
+        <h2>Share</h2>
+    </div>
+    <div class="col-xs-12 text-center">
+
+        <a type="button"
+           class="btn twitter"
+           href="http://twitter.com/intent/tweet?status=@ViewBag.Title"
+           onclick="showPopup(this.href);return(false);">
+            <i class="icon-twitter"></i> Tweet
+        </a>
+
+        <a type="button"
+           class="btn facebook"
+           href="http://www.facebook.com/share.php?u=@baseUrl&amp;title=@ViewBag.Title"
+           onclick="showPopup(this.href);return(false);">
+            <i class="icon-facebook"></i> Facebook
+        </a>
+
+        <a type="button"
+           class="btn google-plus"
+           href="https://plus.google.com/share?url=@baseUrl"
+           onclick="showPopup(this.href);return(false);">
+            <i class="icon-google-plus"></i> Google+
+        </a>
+    </div>
+</div>

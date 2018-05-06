@@ -168,6 +168,13 @@ function createMarkers(places) {
     var bounds = new google.maps.LatLngBounds();
 
     for (var i = 0, place; place = places[i]; i++) {
+
+        if (place.types.contains("parking")
+            && place.price_level != undefined
+            && place.price_level != 0) {
+            continue;
+        }
+
         var image = {
             url: place.icon,
             size: new google.maps.Size(50, 50),
@@ -185,6 +192,7 @@ function createMarkers(places) {
         });
 
         bounds.extend(place.geometry.location);
+
     }
     map.fitBounds(bounds);
 }

@@ -110,7 +110,8 @@ i {
 
 
 /* ===== GENERAL ==== */
-body {
+html, body {
+    height: 100%;
     padding: 0;
 }
 h1 {
@@ -157,6 +158,52 @@ p {
     right: 30px;
     color: #fff;
     border: 0px;
+}
+
+/* ==== CAROUSEL ==== */
+/*.carousel, .item, .active {
+    height: 100%;
+}
+
+.carousel-inner {
+    height: 100%;
+}*/
+
+/* ==== SIDE LINKS ==== */
+.sideLinks a:nth-child(1) {
+    position: fixed;
+    right: 0;
+    bottom: 100px;
+}
+
+.sideLinks a:nth-child(2) {
+    position: fixed;
+    right: 0;
+    bottom: 150px;
+}
+
+.sideLinks a:nth-child(3) {
+    position: fixed;
+    right: 0;
+    bottom: 200px;
+}
+
+/* ==== SOCIAL COLORS ==== */
+.facebook {
+    background-color: #3b5999;
+    color: #fff;
+}
+.google-plus {
+    background-color: #dd4b39;
+    color: #fff;
+}
+.twitter {
+    background-color: #00AFF0;
+    color: #fff;
+}
+.youtube {
+    background-color: #cd201f;
+    color: #fff;
 }
 
 /* ===== FOOTER ==== */

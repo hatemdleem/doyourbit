@@ -118,15 +118,11 @@
             </div>
             <div class="text-center">@Html.ActionLink("Learn More", "Time", "Viccharities", null, new { @class = "my-class btn btn-success btn-lg", value = "98998", id = "2" })</div>
         </div>
-
-
     </div>
+</div>
 
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="float-button1">@Html.ActionLink("donate clothes", "List", "Clothes", null, new { @style = "align: right", @class = "my-class btn btn-success btn-lg", value = "98998", id = "2" })</div>
-            <div class="float-button2" style="margin-top:50px; text-align: right;">@Html.ActionLink("Donate time   ", "List", "Viccharities", null, new { @style = "align: right", @class = "my-class btn btn-success btn-lg", value = "98998", id = "2" })</div>
-            <div class="float-button3" style="margin-top:100px; text-align: right;">@Html.ActionLink("Give blood    ", "List", "Bloods", null, new { @style = "align: right", @class = "my-class btn btn-success btn-lg", value = "98998", id = "2" })</div>
-        </div>
-    </div>
+<div class="sideLinks">
+    @Html.ActionLink("donate clothes", "List", "Clothes", null, new { @style = "align: right", @class = "my-class btn btn-success btn-lg", value = "98998", id = "2" })
+    @Html.ActionLink("Donate time   ", "List", "Viccharities", null, new { @style = "align: right", @class = "my-class btn btn-success btn-lg", value = "98998", id = "2" })
+    @Html.ActionLink("Give blood    ", "List", "Bloods", null, new { @style = "align: right", @class = "my-class btn btn-success btn-lg", value = "98998", id = "2" })
 </div>
