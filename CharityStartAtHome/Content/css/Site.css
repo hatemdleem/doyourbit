@@ -151,6 +151,10 @@ p {
     margin-bottom: 20px;
 }
 
+.m-b-50 {
+    margin-bottom: 50px;
+}
+
 #back-to-top {
     background-color: #1ABB9C !important;
     position: fixed;
@@ -159,6 +163,24 @@ p {
     color: #fff;
     border: 0px;
 }
+/* ==== CONTAINER IMAGE */
+.container_image {
+    position: relative;
+    text-align: center;
+    color: #fff !important;
+    margin-bottom: 40px;
+}
+    .container_image .centered {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .container_image h2 {
+        font-size: 50px;
+    }
+
+
 
 /* ==== CAROUSEL ==== */
 /*.carousel, .item, .active {
@@ -249,6 +271,7 @@ footer {
     padding: 8px 16px;
     list-style: none;
     background-color: #eee;
+    margin-bottom: 0px;
 }
 
 /* ===== PAGINATION ===== */
