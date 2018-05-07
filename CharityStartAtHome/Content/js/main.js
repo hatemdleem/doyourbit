@@ -169,7 +169,7 @@ function createMarkers(places) {
 
     for (var i = 0, place; place = places[i]; i++) {
 
-        if (place.types.contains("parking")
+        if ($.inArray("parking", place.types)
             && place.price_level != undefined
             && place.price_level != 0) {
             continue;
